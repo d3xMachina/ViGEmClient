@@ -49,6 +49,10 @@ if (ViGEmClient_DLL)
         OUTPUT_NAME ViGEmClient
         SUFFIX .dll
     )
+    target_compile_definitions(ViGEmClientShared
+        PUBLIC VIGEM_DYNAMIC
+        PRIVATE VIGEM_EXPORTS
+    )
     target_link_libraries(ViGEmClientShared PRIVATE setupapi.lib)
     setup_include_directories(ViGEmClientShared)
     add_library(ViGEmClient::ViGEmClientShared ALIAS ViGEmClientShared)
