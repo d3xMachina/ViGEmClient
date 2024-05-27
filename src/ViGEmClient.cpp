@@ -605,6 +605,7 @@ VIGEM_ERROR vigem_target_add(PVIGEM_CLIENT vigem, PVIGEM_TARGET target)
 				 * of this call as a potential success and keep the device plugged in.
 				 */
 				VIGEM_WAIT_DEVICE_READY_INIT(&devReady, plugin.SerialNo);
+				target->State = VIGEM_TARGET_CONNECTED;
 
 				DeviceIoControl(
 					vigem->hBusDevice,
@@ -619,8 +620,6 @@ VIGEM_ERROR vigem_target_add(PVIGEM_CLIENT vigem, PVIGEM_TARGET target)
 
 				if (GetOverlappedResult(vigem->hBusDevice, &olWait, &transferred, TRUE) != 0)
 				{
-					target->State = VIGEM_TARGET_CONNECTED;
-
 					error = VIGEM_ERROR_NONE;
 					break;
 				}
@@ -630,7 +629,6 @@ VIGEM_ERROR vigem_target_add(PVIGEM_CLIENT vigem, PVIGEM_TARGET target)
 				// 
 				if (GetLastError() == ERROR_INVALID_PARAMETER)
 				{
-					target->State = VIGEM_TARGET_CONNECTED;
 					target->IsWaitReadyUnsupported = true;
 
 					error = VIGEM_ERROR_NONE;
