@@ -516,6 +516,7 @@ void vigem_target_free(PVIGEM_TARGET target)
 VIGEM_ERROR vigem_target_add(PVIGEM_CLIENT vigem, PVIGEM_TARGET target)
 {
 	VIGEM_ERROR error = VIGEM_ERROR_NO_FREE_SLOT;
+	DWORD winError = ERROR_SUCCESS;
 	DWORD transferred = 0;
 	VIGEM_PLUGIN_TARGET plugin;
 	VIGEM_WAIT_DEVICE_READY devReady;
@@ -638,7 +639,9 @@ VIGEM_ERROR vigem_target_add(PVIGEM_CLIENT vigem, PVIGEM_TARGET target)
 				//
 				// Don't leave device connected if the wait call failed
 				// 
-				error = vigem_target_remove(vigem, target);
+				error = VIGEM_ERROR_WINAPI;
+				winError = GetLastError();
+				vigem_target_remove(vigem, target);
 				break;
 			}
 		}
@@ -654,6 +657,9 @@ VIGEM_ERROR vigem_target_add(PVIGEM_CLIENT vigem, PVIGEM_TARGET target)
 
 	if (olWait.hEvent)
 		CloseHandle(olWait.hEvent);
+
+	if (winError != ERROR_SUCCESS)
+		SetLastError(winError);
 
 	return error;
 }
