@@ -507,7 +507,10 @@ void vigem_target_free(PVIGEM_TARGET target)
 			CloseHandle(target->Ds4CachedOutputReportUpdateAvailable);
 		}
 
-		DeleteCriticalSection(&target->Ds4CachedOutputReportUpdateLock);
+		if (target->Type == DualShock4Wired)
+		{
+			DeleteCriticalSection(&target->Ds4CachedOutputReportUpdateLock);
+		}
 
 		free(target);
 	}
