@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_DLL|x64'">
+    <TargetName>ViGEmClient</TargetName>
+  </PropertyGroup>
+  <Import Project="ViGEmClient.vcxproj" />
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Release_DLL|x64">
+      <Configuration>Release_DLL</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{84C931CF-00BE-4337-96EB-241A38A43A71}</ProjectGuid>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release_DLL|x64'">
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+</Project>
